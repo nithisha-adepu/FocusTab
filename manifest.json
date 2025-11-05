@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "FocusTab",
+  "version": "1.0",
+  "description": "A personalized productivity dashboard for your Chrome new tab.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": ["storage", "notifications"],
+  "icons": {
+    "128": "image.png"
+  }
+}
