@@ -13,41 +13,83 @@ else if (hour < 18) greeting = "Good Afternoon";
 document.getElementById("greeting").textContent = `${greeting}, User!`;
 
 // ----- To-Do List -----
+/* =====================
+   TO-DO LIST FUNCTIONALITY
+===================== */
+
 const taskInput = document.getElementById("taskInput");
-const addTask = document.getElementById("addTask");
+const addTaskBtn = document.getElementById("addTask");
 const taskList = document.getElementById("taskList");
 
-function renderTasks() {
-  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-  taskList.innerHTML = "";
-  tasks.forEach((t, i) => {
-    const li = document.createElement("li");
-    li.textContent = t.text;
-    if (t.done) li.classList.add("done");
-    li.onclick = () => toggleTask(i);
+// Load saved tasks from localStorage
+window.addEventListener("DOMContentLoaded", loadTasks);
+
+// Add a new task
+addTaskBtn.addEventListener("click", addTask);
+taskInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") addTask();
+});
+
+function addTask() {
+  const taskText = taskInput.value.trim();
+  if (taskText === "") return;
+
+  const li = createTaskElement(taskText);
+  taskList.appendChild(li);
+  saveTasks();
+
+  taskInput.value = "";
+}
+
+// Create a task element with delete + toggle complete
+function createTaskElement(text, done = false) {
+  const li = document.createElement("li");
+  li.textContent = text;
+  if (done) li.classList.add("done");
+
+  // Delete button
+  const delBtn = document.createElement("button");
+  delBtn.textContent = "✕";
+  delBtn.className = "delete-btn";
+  delBtn.onclick = () => {
+    li.classList.add("fade-out");
+    setTimeout(() => {
+      li.remove();
+      saveTasks();
+    }, 200);
+  };
+
+  // Toggle done
+  li.onclick = (e) => {
+    if (e.target.tagName === "BUTTON") return; // avoid double-click when deleting
+    li.classList.toggle("done");
+    saveTasks();
+  };
+
+  li.appendChild(delBtn);
+  return li;
+}
+
+// Save all tasks to localStorage
+function saveTasks() {
+  const tasks = [];
+  document.querySelectorAll("#taskList li").forEach((li) => {
+    tasks.push({
+      text: li.childNodes[0].textContent.trim(),
+      done: li.classList.contains("done"),
+    });
+  });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Load tasks from localStorage
+function loadTasks() {
+  const saved = JSON.parse(localStorage.getItem("tasks") || "[]");
+  saved.forEach((t) => {
+    const li = createTaskElement(t.text, t.done);
     taskList.appendChild(li);
   });
 }
-
-function addNewTask() {
-  const val = taskInput.value.trim();
-  if (!val) return;
-  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-  tasks.push({ text: val, done: false });
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  taskInput.value = "";
-  renderTasks();
-}
-
-function toggleTask(i) {
-  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-  tasks[i].done = !tasks[i].done;
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  renderTasks();
-}
-
-addTask.onclick = addNewTask;
-renderTasks();
 
 // ----- Pomodoro Timer -----
 let time = 25 * 60;
@@ -86,19 +128,30 @@ document.getElementById("resetBtn").onclick = () => {
 updateTimerDisplay();
 
 // ----- Weather -----
-async function loadWeather() {
-  const city = "London";
-  const apiKey = "YOUR_API_KEY_HERE";
+const weatherApiKey = "dc620184db514e1a93241650250611"; // paste your key here
+const city = "Hyderabad"; // or you can make this dynamic later
+
+async function getWeather() {
   try {
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
-    const data = await res.json();
-    document.getElementById("weatherInfo").textContent =
-      `${data.name}: ${Math.round(data.main.temp)}°C, ${data.weather[0].main}`;
-  } catch (e) {
-    document.getElementById("weatherInfo").textContent = "Weather unavailable";
+    const response = await fetch(
+      `https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${city}&aqi=no`
+    );
+    const data = await response.json();
+
+    document.getElementById("weather").innerHTML = `
+      <div class="weather-widget">
+        <p class="city">${data.location.name}</p>
+        <p class="temp">${data.current.temp_c}°C</p>
+        <p class="condition">${data.current.condition.text}</p>
+        <img src="https:${data.current.condition.icon}" alt="Weather Icon" />
+      </div>
+    `;
+  } catch (error) {
+    document.getElementById("weather").innerHTML = `<p>Weather unavailable</p>`;
   }
 }
-loadWeather();
+
+getWeather();
 
 // ----- Quote -----
 async function loadQuote() {
