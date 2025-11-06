@@ -1,79 +1,286 @@
+/* ========== GENERAL ========== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+  --bg-light: #f3f6fa;
+  --bg-gradient: linear-gradient(135deg, #a8c0ff, #3f2b96);
+  --card-bg: rgba(255, 255, 255, 0.2);
+  --text-dark: #222;
+  --text-light: #fff;
+  --accent: #3f51b5;
+  --accent-hover: #2c3e90;
+  --shadow: 0 8px 20px rgba(0,0,0,0.15);
+  --blur: blur(12px);
+}
+
+/* ========== BODY ========== */
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  color: #333;
+  background: var(--bg-gradient);
+  color: var(--text-light);
   margin: 0;
-  padding: 30px;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* ========== CONTAINER ========== */
+.container {
+  max-width: 900px;
+  width: 90%;
+  margin-top: 40px;
   text-align: center;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
+/* ========== HEADER (Greeting + Clock) ========== */
 #greeting {
-  font-size: 1.8rem;
-  margin-top: 10px;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
 #clock {
-  font-size: 2rem;
-  margin-bottom: 25px;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  margin-bottom: 40px;
 }
 
+/* ========== WIDGETS GRID ========== */
 .widgets {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
 }
 
+/* ========== CARD STYLE (Glassmorphism) ========== */
 .card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  backdrop-filter: var(--blur);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, background 0.3s ease;
 }
 
-.input-group {
+.card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== HEADINGS ========== */
+.card h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* ========== BUTTONS ========== */
+button {
+  padding: 8px 14px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: var(--accent-hover);
+}
+
+/* ========== INPUTS ========== */
+input {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 0.95rem;
+}
+
+/* ========== TO-DO LIST ========== */
+#todo .input-group {
   display: flex;
+  align-items: center;
   gap: 8px;
   margin-bottom: 10px;
 }
 
-input {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-button {
-  padding: 8px 12px;
-  border: none;
-  background: #42a5f5;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  background: #1e88e5;
-}
-
-ul {
+#taskList {
   list-style: none;
   padding: 0;
-}
-
-li {
+  margin: 0;
   text-align: left;
-  padding: 6px;
-  cursor: pointer;
+  max-height: 160px;
+  overflow-y: auto;
 }
 
-li.done {
+#taskList li {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#taskList li:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+#taskList li.done {
   text-decoration: line-through;
-  color: gray;
+  color: #cfd8dc;
+}
+
+/* ========== POMODORO TIMER ========== */
+#timer {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 10px 0 20px;
+  color: #fff;
+}
+
+/* ========== WEATHER ========== */
+#weatherInfo {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #f1f1f1;
+}
+
+/* ========== QUOTE ========== */
+#quoteText {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: #fff;
+}
+
+/* ========== SCROLLBAR (for task list) ========== */
+#taskList::-webkit-scrollbar {
+  width: 6px;
+}
+#taskList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+  #greeting {
+    font-size: 1.6rem;
+  }
+  #clock {
+    font-size: 1.1rem;
+  }
+  .card {
+    padding: 20px;
+  }
+}
+/* --- To-Do Widget Styling --- */
+.todo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 1rem;
+  width: 100%;
+  max-width: 320px;       /* prevents it from growing too wide */
+  max-height: 260px;      /* keeps it compact like other widgets */
+  overflow: hidden;       /* hides overflow */
+}
+
+#taskList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;       /* scroll if tasks exceed height */
+  max-height: 150px;
+}
+
+.todo-input-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#taskInput {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+#taskInput::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#addTask {
+  padding: 0.5rem 1rem;
+  background: #4c8bf5;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#addTask:hover {
+  background: #3b6fd8;
+}
+
+
+
+#taskList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+#taskList li:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#taskList li.done {
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Delete button (✕) */
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ff6b6b;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Fade out animation */
+.fade-out {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.2s ease;
 }
