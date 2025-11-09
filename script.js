@@ -12,7 +12,6 @@ if (hour < 12) greeting = "Good Morning";
 else if (hour < 18) greeting = "Good Afternoon";
 document.getElementById("greeting").textContent = `${greeting}, User!`;
 
-// ----- To-Do List -----
 /* =====================
    TO-DO LIST FUNCTIONALITY
 ===================== */
