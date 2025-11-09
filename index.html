@@ -24,23 +24,39 @@
 
 
     <div class="widgets">
+  
       <div class="card" id="todo">
-        <h3>To-Do List</h3>
-        <div class="input-group">
-          <input id="taskInput" placeholder="Add a task" />
-          <button id="addTask">+</button>
+        <div class="stats">
+            <div class="details">
+                <h1>TO-DO</h1>
+                <div id="progressbar">
+                    <div id="progress"></div>
+                </div>
+            </div>
+            <div class="numbers">
+                <div id="num">0/0</div>
+            </div>
         </div>
-        <ul id="taskList"></ul>
+
+        <form action="">
+            <input type ="text" id="taskInfo" placeholder="Write your task">
+            <button type = "submit" id="newTask">+</button>
+        </form>
+
+        <ul id ="tasklist">
+           
+        </ul>
       </div>
 
       <div class="card" id="pomodoro">
         <h3>Pomodoro Timer</h3>
         <p id="timer">25:00</p>
-        <div>
+        <div class="pomodoro-buttons">
           <button id="startBtn">Start</button>
           <button id="resetBtn">Reset</button>
         </div>
       </div>
+
 
       <div class="card" id="weather">
         <h3>Weather</h3>
@@ -48,12 +64,19 @@
       </div>
 
       <div class="card" id="quote">
-        <h3>Motivational Quote</h3>
-        <p id="quoteText">Fetching...</p>
+        <div class="quote-header">
+            <h3>Motivational Quote</h3>
+            <button id="refreshQuote">🔄</button>
+        </div>
+          <p id="quoteText">Fetching...</p>
       </div>
     </div>
   </div>
 
   <script src="script.js"></script>
+  <script src="todo.js"></script>
+  <!--script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>-->
+
+
 </body>
 </html>

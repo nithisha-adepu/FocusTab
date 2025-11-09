@@ -6,9 +6,14 @@
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
+  "action":{
+        "default_popup": "index.html",
+        "default_icon": "images/image.png"
+  },
   "permissions": ["storage", "notifications"],
   "icons": {
-    "128": "image.png"
+    "128": "images/image.png"
   }
+
 }
 
