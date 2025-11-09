@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,6 +10,18 @@
   <div class="container">
     <h1 id="greeting"></h1>
     <div id="clock"></div>
+    <div class="widget search-bar">
+  <form id="search-form" action="https://www.google.com/search" method="GET" target="_blank">
+    <input
+      type="text"
+      id="search-input"
+      name="q"
+      placeholder="Search Google or type a URL"
+      autocomplete="off"
+    />
+  </form>
+</div>
+
 
     <div class="widgets">
       <div class="card" id="todo">
@@ -44,4 +57,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
